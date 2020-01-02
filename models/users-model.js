@@ -14,6 +14,13 @@ const findById = id => {
   //                  WHERE id = ${id}`);
 };
 
+// GET SPECIFIC USER BY FILTER
+const findByFilter = filter => {
+  return db("users")
+    .first()
+    .where(filter);
+};
+
 // ADD A USER
 const addUser = user => {
   return db("users").insert(user, "id");
@@ -38,5 +45,6 @@ module.exports = {
   findById,
   addUser,
   updateUser,
-  removeUser
+  removeUser,
+  findByFilter
 };

@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     tbl.string("lastName").notNullable();
     tbl.string("email").notNullable();
     tbl.string("password").notNullable();
-    tbl.integer("familySize")
+    tbl.integer("familySize");
     tbl.boolean("admin").defaultTo(false);
   });
 };
