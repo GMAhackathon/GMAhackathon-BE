@@ -14,6 +14,7 @@ router.get("/", async (req, res)=> {
     res.status(500).json({err: err})
   }
 })
+
 // GET APPOINTMENT
 router.get("/appointments", async (req, res) => {
   let start = req.body.start,
