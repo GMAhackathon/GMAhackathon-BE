@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       .onUpdate("CASCADE");
 
     // yyyy-mm-dd
-    tbl.string("date").notNullable();
+    tbl.date("date").notNullable();
 
     tbl.integer("meals").notNullable();
   });

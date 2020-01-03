@@ -2,11 +2,7 @@ const db = require("../config/dbConfig.js");
 
 // GET ALL APPOINTMENTS FOR User
 const findAllAppointmentsById = id => {
-  return db("calendar").where("user_id", id);
-
-  //SQL RAW METHOD
-  // return db.raw(`SELECT * FROM users
-  //                  WHERE id = ${id}`);
+  return db("users").where("users_id", id);
 };
 
 const getAll = () => {
@@ -40,4 +36,5 @@ module.exports = {
   addAppointment,
   deleteAppointment,
   getAll
+  // findAppointmentById
 };

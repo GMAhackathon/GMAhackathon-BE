@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
     tbl.boolean("admin").defaultTo(false);
 
     // Current Reservation
-    tbl.string("current");
+    tbl.date("current");
   });
 };
 
