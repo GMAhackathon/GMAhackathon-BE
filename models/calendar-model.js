@@ -12,6 +12,7 @@ const findAllAppointmentsById = id => {
 const getAll = () => {
   return db("calendar");
 };
+
 // GET APPOINTMENTS WITHIN A RANGE
 const getAppointment = (start, end) => {
   //return db("calendar").where("date").between(start, end)
