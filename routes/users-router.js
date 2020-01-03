@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const usersDB = require("../models/users-model.js");
 const calendarDB = require("../models/calendar-model.js");
+const studentDB = require("../models/student-model.js");
 
 // Middleware
 const protected = require("../auth/restricted-middleware.js");
@@ -16,11 +17,13 @@ router.get("/", protected, async (req, res) => {
   }
 });
 
-// GET USER BY ID
+// GET USER AND STUDENTS BY ID
 router.get("/:id", protected, async (req, res) => {
   const userId = req.params.id;
   try {
     const user = await usersDB.findById(userId);
+    const students = await studentDB.getParentsStudents(userId);
+    res.status(200).json({ user, students: students });
     if (!user) {
       res
         .status(404)
@@ -36,15 +39,11 @@ router.get("/:id", protected, async (req, res) => {
 // INSERT USER INTO DB
 router.post("/", protected, async (req, res) => {
   const newUser = req.body;
-  if (!newUser.name) {
-    res.status(404).json({ err: "Please provide the name" });
-  } else {
-    try {
-      const user = await usersDB.addUser(newUser);
-      res.status(201).json(user);
-    } catch (err) {
-      res.status(500).json({ err: "Error in adding user" });
-    }
+  try {
+    const user = await usersDB.addUser(newUser);
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(500).json({ err: "Error in adding user" });
   }
 });
 
@@ -80,6 +79,19 @@ router.get("/:id/appointments", protected, async (req, res) => {
     res.status(200).json(getAppt);
   } catch (err) {
     res.status(500).json({ err: "Error in user appointment" });
+  }
+});
+
+// Get students by userid
+router.get("/:id/students", protected, async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  try {
+    const getStudents = await studentDB.getParentsStudents(userId);
+    res.status(200).json(getStudents);
+  } catch (err) {
+    res.status(500).json({ err: "Error in retrieving students" });
   }
 });
 

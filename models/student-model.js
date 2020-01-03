@@ -1,3 +1,5 @@
+const db = require("../config/dbConfig.js");
+
 // GET ALL STUDENTS
 const find = () => {
   return db("students");
@@ -44,6 +46,11 @@ const removeStudent = id => {
     .del();
 };
 
+// Get all students under user
+const getParentsStudents = id => {
+  return db("students").where("users_id", id);
+};
+
 module.exports = {
   find,
   findById,
@@ -51,5 +58,6 @@ module.exports = {
   updateStudent,
   removeStudent,
   findByFilter,
-  addStudents
+  addStudents,
+  getParentsStudents
 };
