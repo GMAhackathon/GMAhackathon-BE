@@ -13,9 +13,9 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res.status(500).json({ err: err });
   }
-});
+})
 
-// GET APPOINTMENT with range
+// GET APPOINTMENT
 router.get("/appointments", async (req, res) => {
   let start = req.body.start,
     end = req.body.end;
