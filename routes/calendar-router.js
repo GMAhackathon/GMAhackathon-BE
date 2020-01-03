@@ -56,14 +56,14 @@ router.delete("/appointments/:id", async (req, res) => {
   }
 });
 
-// Get All appts
-router.get("/appointments", async (req, res) => {
-  try {
-    const getAll = await calendarDB.getAll();
-    res.status(200).json(getAll);
-  } catch (err) {
-    res.status(500).json({ err: err });
-  }
-});
+// // Get All appts
+// router.get("/appointments", async (req, res) => {
+//   try {
+//     const getAll = await calendarDB.getAll();
+//     res.status(200).json(getAll);
+//   } catch (err) {
+//     res.status(500).json({ err: err });
+//   }
+// });
 
 module.exports = router;
