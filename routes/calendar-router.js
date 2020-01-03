@@ -6,7 +6,7 @@ const calendarDB = require("../models/calendar-model.js");
 const usersDB = require("../models/users-model.js");
 
 // GET ALL APPOINTMENTS
-router.get("/", async (req, res) => {
+router.get("/", protected, async (req, res) => {
   try {
     const allAppointments = await calendarDB.getAll();
     res.status(200).json(allAppointments);
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 })
 
 // GET APPOINTMENT
-router.get("/appointments", async (req, res) => {
+router.get("/appointments", protected, async (req, res) => {
   let start = req.body.start,
     end = req.body.end;
   try {
@@ -29,7 +29,7 @@ router.get("/appointments", async (req, res) => {
 
 //  ADD APPOINTMENT
 router.post("/appointments", protected, async (req, res) => {
-  const user_id = req.user_id;
+  const user_id = req.body.user_id;
   let newAppointment = req.body;
   console.log(newAppointment);
 
@@ -56,15 +56,5 @@ router.delete("/appointments/:id", async (req, res) => {
     res.status(500).json({ err: "Error in deleting appointment" });
   }
 });
-
-// // Get All appts
-// router.get("/appointments", async (req, res) => {
-//   try {
-//     const getAll = await calendarDB.getAll();
-//     res.status(200).json(getAll);
-//   } catch (err) {
-//     res.status(500).json({ err: err });
-//   }
-// });
 
 module.exports = router;
