@@ -7,6 +7,7 @@ const cors = require("cors");
 const usersRouter = require("./routes/users-router.js");
 const authRouter = require("./routes/auth-router.js");
 const calendarRouter = require("./routes/calendar-router.js");
+const studentRouter = require("./routes/student-router.js");
 
 // Middleware
 server.use(cors());
@@ -17,6 +18,7 @@ server.use(express.json());
 server.use("/api/users", usersRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/calendar", calendarRouter);
+server.use("/api/student", studentRouter);
 
 //Routes
 server.get("/", (req, res) => {

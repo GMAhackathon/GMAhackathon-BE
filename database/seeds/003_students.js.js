@@ -8,12 +8,12 @@ exports.seed = function(knex) {
         {
           firstName: "Bob",
           lastName: "Ross",
-          users_id: 1
+          users_id: 2
         },
         {
           firstName: "John",
           lastName: "Ross",
-          users_id: 1
+          users_id: 2
         }
       ]);
     });
