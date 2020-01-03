@@ -44,6 +44,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// UPDATE USER
 router.put("/:id", async (req, res) => {
   const userId = req.params.id;
   const newChanges = req.body;
@@ -59,6 +60,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE USER
 router.delete("/:id", async (req, res) => {
   const userId = req.params.id;
   try {

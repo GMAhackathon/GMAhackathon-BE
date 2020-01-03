@@ -1,6 +1,10 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable("calendar", tbl => {
+  return knex.schema.createTable("users", tbl => {
     tbl.increments();
+
+    //Parent
+    tbl.string("firstName").notNullable();
+    tbl.string("lastName").notNullable();
 
     tbl
       .integer("users_id")
@@ -10,13 +14,9 @@ exports.up = function(knex, Promise) {
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
-
-    tbl.date("date").notNullable();
-
-    tbl.integer("meals").notNullable();
   });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("calendar");
+  return knex.schema.dropTableIfExists("users");
 };

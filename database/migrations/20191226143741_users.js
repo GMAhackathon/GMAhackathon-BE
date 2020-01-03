@@ -2,12 +2,21 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("users", tbl => {
     tbl.increments();
 
+    //Parent
     tbl.string("firstName").notNullable();
     tbl.string("lastName").notNullable();
-    tbl.string("email").notNullable();
+
+    // Login Credentials
+    tbl.string("email").notNullable().uni;
     tbl.string("password").notNullable();
+
     tbl.integer("familySize");
+
+    // Admin Role
     tbl.boolean("admin").defaultTo(false);
+
+    // Current Reservation
+    tbl.date("current");
   });
 };
 
