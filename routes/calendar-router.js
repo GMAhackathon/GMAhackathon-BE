@@ -29,13 +29,13 @@ router.get("/appointments", protected, async (req, res) => {
 
 //  ADD APPOINTMENT
 router.post("/appointments", protected, async (req, res) => {
-  const user_id = req.body.user_id;
+  const user_id = req.user_id;
   let newAppointment = req.body;
   console.log(newAppointment);
 
   try {
     const addAppointment = await calendarDB.addAppointment(newAppointment);
-    const updateCurrentRes = await usersDB.updateUser(user_id, {
+    const updateCurrentRes = await usersDB.updateUser(newAppointment.user_id, {
       current: newAppointment.date
     });
     if (addAppointment && updateCurrentRes) {
