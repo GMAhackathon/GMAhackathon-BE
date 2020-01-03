@@ -18,7 +18,7 @@ router.get("/", protected, async (req, res) => {
 // GET APPOINTMENT
 router.get("/appointments", protected, async (req, res) => {
   let start = req.body.start,
-    end = req.body.end;
+      end = req.body.end;
   try {
     const appointments = await calendarDB.getAppointment(start, end);
     res.status(200).json(appointments);
@@ -47,11 +47,17 @@ router.post("/appointments", protected, async (req, res) => {
 });
 
 // DELETE APPOINTMENT
-router.delete("/appointments/:id", async (req, res) => {
+router.delete("/appointments/:id", protected, async (req, res) => {
+  const user_id = req.user_id;
   const appointmentId = req.params.id;
   try {
     const deleting = await calendarDB.deleteAppointment(appointmentId);
-    res.status(204).json(deleting);
+    const updateCurrentRes = await usersDB.updateUser(user_id, {
+      current: null
+    });
+    if(deleting && updateCurrentRes){
+      res.status(200).json({successfully: "deleted your reservation and updated the current"});
+    }
   } catch (err) {
     res.status(500).json({ err: "Error in deleting appointment" });
   }
