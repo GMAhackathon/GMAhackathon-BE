@@ -2,8 +2,11 @@ const router = require("express").Router();
 
 const usersDB = require("../models/users-model.js");
 
+// Middleware
+const protected = require("../auth/restricted-middleware.js");
+
 // GET ALL USERS
-router.get("/", async (req, res) => {
+router.get("/", protected, async (req, res) => {
   try {
     const users = await usersDB.find();
     res.status(200).json(users);
@@ -13,7 +16,7 @@ router.get("/", async (req, res) => {
 });
 
 // GET USER BY ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", protected, async (req, res) => {
   const userId = req.params.id;
   try {
     const user = await usersDB.findById(userId);
@@ -30,7 +33,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // INSERT USER INTO DB
-router.post("/", async (req, res) => {
+router.post("/", protected, async (req, res) => {
   const newUser = req.body;
   if (!newUser.name) {
     res.status(404).json({ err: "Please provide the name" });
@@ -45,23 +48,20 @@ router.post("/", async (req, res) => {
 });
 
 // UPDATE USER
-router.put("/:id", async (req, res) => {
+router.put("/:id", protected, async (req, res) => {
   const userId = req.params.id;
   const newChanges = req.body;
-  if (!newChanges.name) {
-    res.status(404).json({ err: "You are missing information" });
-  } else {
-    try {
-      const addChanges = await usersDB.updateUser(userId, newChanges);
-      res.status(200).json(addChanges);
-    } catch (err) {
-      res.status(500).json({ err: "Error in updating user" });
-    }
+
+  try {
+    const addChanges = await usersDB.updateUser(userId, newChanges);
+    res.status(200).json(addChanges);
+  } catch (err) {
+    res.status(500).json({ err: "Error in updating user" });
   }
 });
 
 // DELETE USER
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", protected, async (req, res) => {
   const userId = req.params.id;
   try {
     const deleting = await usersDB.removeUser(userId);

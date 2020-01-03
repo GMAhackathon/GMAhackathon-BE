@@ -6,17 +6,16 @@ const calendarDB = require("../models/calendar-model.js");
 const usersDB = require("../models/users-model.js");
 
 // GET APPOINTMENT
-router.get("/appointments", async (req, res) =>{
-  let start = req.body.start, 
-      end = req.body.end;
-  try{
+router.get("/appointments", async (req, res) => {
+  let start = req.body.start,
+    end = req.body.end;
+  try {
     const appointments = await calendarDB.getAppointment(start, end);
     res.status(200).json(appointments);
+  } catch (err) {
+    res.status(500).json({ err: err });
   }
-  catch(err){
-    res.status(500).json({err: err})
-  }
-})
+});
 
 //  ADD APPOINTMENT
 router.post("/appointments", protected, async (req, res) => {
