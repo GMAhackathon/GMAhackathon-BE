@@ -6,7 +6,7 @@ const calendarDB = require("../models/calendar-model.js");
 const usersDB = require("../models/users-model.js");
 
 // GET ALL APPOINTMENTS
-router.get("/", async (req, res) => {
+router.get("/", protected, async (req, res) => {
   try {
     const allAppointments = await calendarDB.getAll();
     res.status(200).json(allAppointments);
@@ -16,9 +16,9 @@ router.get("/", async (req, res) => {
 })
 
 // GET APPOINTMENT
-router.get("/appointments", async (req, res) => {
+router.get("/appointments", protected, async (req, res) => {
   let start = req.body.start,
-    end = req.body.end;
+      end = req.body.end;
   try {
     const appointments = await calendarDB.getAppointment(start, end);
     res.status(200).json(appointments);
@@ -47,24 +47,20 @@ router.post("/appointments", protected, async (req, res) => {
 });
 
 // DELETE APPOINTMENT
-router.delete("/appointments/:id", async (req, res) => {
+router.delete("/appointments/:id", protected, async (req, res) => {
+  const user_id = req.user_id;
   const appointmentId = req.params.id;
   try {
     const deleting = await calendarDB.deleteAppointment(appointmentId);
-    res.status(204).json(deleting);
+    const updateCurrentRes = await usersDB.updateUser(user_id, {
+      current: null
+    });
+    if(deleting && updateCurrentRes){
+      res.status(200).json({successfully: "deleted your reservation and updated the current"});
+    }
   } catch (err) {
     res.status(500).json({ err: "Error in deleting appointment" });
   }
 });
-
-// // Get All appts
-// router.get("/appointments", async (req, res) => {
-//   try {
-//     const getAll = await calendarDB.getAll();
-//     res.status(200).json(getAll);
-//   } catch (err) {
-//     res.status(500).json({ err: err });
-//   }
-// });
 
 module.exports = router;

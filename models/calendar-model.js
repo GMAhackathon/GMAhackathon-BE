@@ -2,7 +2,7 @@ const db = require("../config/dbConfig.js");
 
 // GET ALL APPOINTMENTS FOR User
 const findAllAppointmentsById = id => {
-  return db("users").where("users_id", id);
+  return db("calendar").where("users_id", id);
 };
 
 const getAll = () => {
