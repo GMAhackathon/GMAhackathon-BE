@@ -7,7 +7,10 @@ exports.up = function(knex, Promise) {
     tbl.string("lastName").notNullable();
 
     // Login Credentials
-    tbl.string("email").notNullable().uni;
+    tbl
+      .string("email")
+      .notNullable()
+      .unique();
     tbl.string("password").notNullable();
 
     tbl.integer("familySize");
