@@ -9,6 +9,10 @@ const findAllAppointmentsById = id => {
   //                  WHERE id = ${id}`);
 };
 
+const getAll = () => {
+  return db("calendar");
+};
+
 // ADD APPOINTMENT
 const addAppointment = appointment => {
   return db("appointments").insert(appointment, "id");
@@ -24,5 +28,6 @@ const deleteAppointment = id => {
 module.exports = {
   findAllAppointmentsById,
   addAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getAll
 };
