@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const usersDB = require("../models/users-model.js");
+const calendarDB = require("../models/calendar-model.js");
 
 // Middleware
 const protected = require("../auth/restricted-middleware.js");
@@ -68,6 +69,17 @@ router.delete("/:id", protected, async (req, res) => {
     res.status(204).json(deleting);
   } catch (err) {
     res.status(500).json({ err: "Error in deleting user" });
+  }
+});
+
+// Get appointment for user
+router.get("/:id/appointments", protected, async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const getAppt = await calendarDB.findAllAppointmentsById(userId);
+    res.status(200).json(getAppt);
+  } catch (err) {
+    res.status(500).json({ err: "Error in user appointment" });
   }
 });
 

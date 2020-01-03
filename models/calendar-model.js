@@ -1,6 +1,6 @@
 const db = require("../config/dbConfig.js");
 
-// GET ALL APPOINTMENTS FOR SPECIFIC DOCTOR
+// GET ALL APPOINTMENTS FOR User
 const findAllAppointmentsById = id => {
   return db("calendar").where("user_id", id);
 
