@@ -23,7 +23,8 @@ router.get("/:id", protected, async (req, res) => {
   try {
     const user = await usersDB.findById(userId);
     const students = await studentDB.getParentsStudents(userId);
-    res.status(200).json({ user, students: students });
+    const currentAppointment = await calendarDB.findAllAppointmentsById(userId);
+    res.status(200).json({ user, students: students, appointment: currentAppointment });
     if (!user) {
       res
         .status(404)
