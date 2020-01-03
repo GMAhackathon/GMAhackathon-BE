@@ -17,6 +17,7 @@ router.get("/appointments", async (req, res) =>{
     res.status(500).json({err: err})
   }
 })
+
 //  ADD APPOINTMENT
 router.post("/appointments", protected, async (req, res) => {
   const user_id = req.user_id;
