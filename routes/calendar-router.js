@@ -6,15 +6,16 @@ const calendarDB = require("../models/calendar-model.js");
 const usersDB = require("../models/users-model.js");
 
 // GET ALL APPOINTMENTS
-router.get("/", async (req, res)=> {
-  try{
+router.get("/", async (req, res) => {
+  try {
     const allAppointments = await calendarDB.getAll();
     res.status(200).json(allAppointments);
   } catch (err) {
-    res.status(500).json({err: err})
+    res.status(500).json({ err: err });
   }
-})
-// GET APPOINTMENT
+});
+
+// GET APPOINTMENT with range
 router.get("/appointments", async (req, res) => {
   let start = req.body.start,
     end = req.body.end;
@@ -56,14 +57,14 @@ router.delete("/appointments/:id", async (req, res) => {
   }
 });
 
-// Get All appts
-router.get("/appointments", async (req, res) => {
-  try {
-    const getAll = await calendarDB.getAll();
-    res.status(200).json(getAll);
-  } catch (err) {
-    res.status(500).json({ err: err });
-  }
-});
+// // Get All appts
+// router.get("/appointments", async (req, res) => {
+//   try {
+//     const getAll = await calendarDB.getAll();
+//     res.status(200).json(getAll);
+//   } catch (err) {
+//     res.status(500).json({ err: err });
+//   }
+// });
 
 module.exports = router;
