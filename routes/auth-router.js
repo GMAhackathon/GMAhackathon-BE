@@ -32,9 +32,10 @@ router.post("/register", async (req, res) => {
  * Returns: Json Token if user logs in successfully
  */
 router.post("/login", (req, res) => {
-  const { email } = req.body;
-  const { password } = req.body;
-
+  const { email, password } = req.body;
+  if(!email || !password){
+		res.status(400).json('incomplete data');
+	}
   if (!email && !password) {
     res.status(401).json({ error: "Wrong password or username" });
   } else {
